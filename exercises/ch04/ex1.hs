@@ -21,10 +21,9 @@ safeInit [x] = Just []
 safeInit (x:xs) = Just (x : fromMaybe xs (safeInit xs))
 safeInit _ = Nothing
 
+
 splitWith :: (a -> Bool) -> [a] -> [[a]]
 splitWith _ [] = []
 splitWith pred (x:xs) | not (pred x) = splitWith pred xs
-splitWith pred xs = (takeWhile pred xs):(splitWith pred next)
-                    where rest = dropWhile pred xs
-                          rev pred x = not (pred x)
-                          next = dropWhile (rev pred) rest
+splitWith pred xs = (takeWhile pred xs):(splitWith pred (dropWhile notPred (dropWhile pred xs)))
+	where notPred x = not (pred x)
