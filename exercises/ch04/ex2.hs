@@ -26,3 +26,14 @@ asInt_either xs = foldl convertAndSum (Right 0) xs
 concatFoldr :: [[a]] -> [a]
 concatFoldr xs = foldr step [] xs       
   where step l x = l ++ x
+
+
+takeWhileRecur :: (a -> Bool) -> [a] -> [a]
+takeWhileRecur f [] = []
+takeWhileRecur f (x:xs) | f x = x : (takeWhileRecur f xs)
+                        | otherwise = takeWhileRecur f xs 
+
+takeWhileFold :: (a -> Bool) -> [a] -> [a]
+takeWhileFold f xs = foldr step [] xs
+  where step x l | f x = x : l
+                 | otherwise = l
