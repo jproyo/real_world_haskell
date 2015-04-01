@@ -21,3 +21,8 @@ asInt_either xs = foldl convertAndSum (Right 0) xs
   where convertAndSum (Right acc) x | (x >= '0') && (x <= '9') = Right (acc * 10 + digitToInt x)
                                     | otherwise = Left ("Not a digit '" ++ [x] ++ "'")
         convertAndSum (Left err) _ = Left err
+
+-- file: ch04/ch04.exercises.hs
+concatFoldr :: [[a]] -> [a]
+concatFoldr xs = foldr step [] xs       
+  where step l x = l ++ x
