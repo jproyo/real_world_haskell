@@ -37,3 +37,21 @@ takeWhileFold :: (a -> Bool) -> [a] -> [a]
 takeWhileFold f xs = foldr step [] xs
   where step x l | f x = x : l
                  | otherwise = l
+
+groupBy_foldl :: (a -> a -> Bool) -> [a] -> [[a]]
+groupBy_foldl p xs = foldl step [] xs
+  where step [] x = [[x]]
+        step acc x | p (head (last acc)) x = (init acc) ++ [((last acc) ++ [x])]
+                   | otherwise             = acc ++ [[x]]
+
+anyFold :: (a -> Bool) -> [a] -> Bool
+anyFold f xs = foldl step False xs
+  where step acc x | f x = True 
+                   | otherwise = acc
+
+cycleFold :: [a] -> [a]
+cycleFold xs = (foldr (:) [] xs) ++ (cycleFold xs)
+
+
+
+
