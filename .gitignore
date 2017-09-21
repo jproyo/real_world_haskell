@@ -1,2 +1,3 @@
 *.hi
-*.o
+*.io
+.DS_Store
