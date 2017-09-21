@@ -1,5 +1,6 @@
 {-- snippet all --}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE DatatypeContexts #-}
 
 import Control.Monad.Error
 
@@ -12,10 +13,10 @@ data Show a =>
 instance Error (DivByError a) where
     strMsg x = OtherDivByError x
 
-divBy :: Integral a => a -> [a] -> Either (DivByError a) [a]
+divBy :: (Show a, Integral a) => a -> [a] -> Either (DivByError a) [a]
 divBy = divByGeneric
 
-divByGeneric :: (Integral a, MonadError (DivByError a) m) =>
+divByGeneric :: (Show a, Integral a, MonadError (DivByError a) m) =>
                  a -> [a] -> m [a]
 divByGeneric _ [] = return []
 divByGeneric _ (0:_) = throwError DivBy0
